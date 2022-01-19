@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import ls from "local-storage";
 
-function Dailylist({ date }) {
-  const [check1, setCheck1] = useState(ls.get("make-beds") ?? false);
-  const [check2, setCheck2] = useState(ls.get("wash-dishes") ?? false);
-  const [check3, setCheck3] = useState(ls.get("scrub-sink") ?? false);
-  const [check4, setCheck4] = useState(ls.get("wipe-counters") ?? false);
-  const [check5, setCheck5] = useState(ls.get("vacuum-floors") ?? false);
-  const [check6, setCheck6] = useState(ls.get("laundry") ?? false);
+function QuarterlyList({ date }) {
+  const [check1, setCheck1] = useState(ls.get("wipe-baseboards") ?? false);
+  const [check2, setCheck2] = useState(ls.get("clean-fans-light") ?? false);
+  const [check3, setCheck3] = useState(ls.get("clean-windows") ?? false);
+  const [check4, setCheck4] = useState(ls.get("clean-furniture") ?? false);
+  const [check5, setCheck5] = useState(ls.get("change-air-filter") ?? false);
+  const [check6, setCheck6] = useState(ls.get("wipe-cabinets") ?? false);
 
   const firstUpdate = useRef(true);
 
@@ -18,93 +18,95 @@ function Dailylist({ date }) {
     }
 
     // this code will execute every time date changes
-    setCheck1(false);
-    setCheck2(false);
-    setCheck3(false);
-    setCheck4(false);
-    setCheck5(false);
-    setCheck6(false);
+    if (date % Math.floor(365 / 4) === 0) {
+      setCheck1(false);
+      setCheck2(false);
+      setCheck3(false);
+      setCheck4(false);
+      setCheck5(false);
+      setCheck6(false);
+    }
   }, [date]);
 
   return (
     <div className="border">
-      <h2>The Daily 6</h2>
-      <ul className="box">
+      <h2>Quarterly</h2>
+      <ul className="box-column">
         <li className="child">
           <input
             type="checkbox"
-            id="make-beds"
+            id="wipe-baseboards"
             checked={check1}
             onChange={() => {
               setCheck1((prevCheck) => !prevCheck);
-              ls.set("make-beds", !check1);
+              ls.set("wipe-baseboards", !check1);
             }}
           />
-          <label htmlFor="make-beds">Make Beds</label>
+          <label htmlFor="wipe-baseboards">Wipe Baseboards</label>
         </li>
         <li className="child">
           <input
             type="checkbox"
-            id="wash-dishes"
+            id="clean-fans-light"
             checked={check2}
             onChange={() => {
-              ls.set("wash-dishes", !check2);
+              ls.set("clean-fans-light", !check2);
               setCheck2((prevCheck) => !prevCheck);
             }}
           />
-          <label htmlFor="wash-dishes">Wash Dishes</label>
+          <label htmlFor="clean-fans-light">Clean Fans and Lights</label>
         </li>
         <li className="child">
           <input
             type="checkbox"
-            id="scrub-sink"
+            id="clean-windows"
             checked={check3}
             onChange={() => {
-              ls.set("scrub-sink", !check3);
+              ls.set("clean-windows", !check3);
               setCheck3((prevCheck) => !prevCheck);
             }}
           />
-          <label htmlFor="scrub-sink">Scrub Sink</label>
+          <label htmlFor="clean-windows">Clean Windows</label>
         </li>
         <li className="child">
           <input
             type="checkbox"
-            id="wipe-counters"
+            id="clean-furniture"
             checked={check4}
             onChange={() => {
-              ls.set("wipe-counters", !check4);
+              ls.set("clean-furniture", !check4);
               setCheck4((prevCheck) => !prevCheck);
             }}
           />
-          <label htmlFor="wipe-counters">Wipe Counters</label>
+          <label htmlFor="clean-furniture">Clean Furniture</label>
         </li>
         <li className="child">
           <input
             type="checkbox"
-            id="vacuum-floors"
+            id="change-air-filter"
             checked={check5}
             onChange={() => {
-              ls.set("vacuum-floors", !check5);
+              ls.set("change-air-filter", !check5);
               setCheck5((prevCheck) => !prevCheck);
             }}
           />
-          <label htmlFor="vacuum-floors">Vacuum Floors</label>
+          <label htmlFor="change-air-filter">Change Air Filter</label>
         </li>
         <li className="child">
           <input
             type="checkbox"
-            id="laundry"
+            id="wipe-cabinets"
             checked={check6}
             onChange={() => {
-              ls.set("laundry", !check6);
+              ls.set("wipe-cabinets", !check6);
               setCheck6((prevCheck) => !prevCheck);
             }}
           />
-          <label htmlFor="laundry">1 Load of Laundry</label>
+          <label htmlFor="wipe-cabinets">Wipe Down Cabinets</label>
         </li>
       </ul>
     </div>
   );
 }
 
-export default Dailylist;
+export default QuarterlyList;
