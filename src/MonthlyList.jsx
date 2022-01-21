@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import ls from "local-storage";
+import dayjs from "dayjs";
 
-function MonthlyList({ date }) {
+function MonthlyList({ daysSinceEpoch }) {
   const [check1, setCheck1] = useState(ls.get("scrub-showers") ?? false);
   const [check2, setCheck2] = useState(
     ls.get("deep-clean-appliances") ?? false
@@ -16,16 +17,16 @@ function MonthlyList({ date }) {
       firstUpdate.current = false;
       return;
     }
-    if (date % 30 === 0) {
+    if (dayjs.unix(daysSinceEpoch * 86400).date() === 1) {
       setCheck1(false);
       setCheck2(false);
       setCheck3(false);
       setCheck4(false);
     }
-  }, [date]);
+  }, [daysSinceEpoch]);
 
   return (
-    <div className="border">
+    <div className="border full-width">
       <h2>Monthly</h2>
       <ul className="box-column">
         <li className="child">

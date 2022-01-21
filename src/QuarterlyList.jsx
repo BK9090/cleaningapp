@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import ls from "local-storage";
+import dayjs from "dayjs";
 
-function QuarterlyList({ date }) {
+function QuarterlyList({ daysSinceEpoch }) {
   const [check1, setCheck1] = useState(ls.get("wipe-baseboards") ?? false);
   const [check2, setCheck2] = useState(ls.get("clean-fans-light") ?? false);
   const [check3, setCheck3] = useState(ls.get("clean-windows") ?? false);
@@ -18,7 +19,12 @@ function QuarterlyList({ date }) {
     }
 
     // this code will execute every time date changes
-    if (date % Math.floor(365 / 4) === 0) {
+    if (
+      dayjs.unix(daysSinceEpoch * 86400).isSame(dayjs().month(0).date(1)) ||
+      dayjs.unix(daysSinceEpoch * 86400).isSame(dayjs().month(2).date(1)) ||
+      dayjs.unix(daysSinceEpoch * 86400).isSame(dayjs().month(5).date(1)) ||
+      dayjs.unix(daysSinceEpoch * 86400).isSame(dayjs().month(8).date(1))
+    ) {
       setCheck1(false);
       setCheck2(false);
       setCheck3(false);
@@ -26,10 +32,10 @@ function QuarterlyList({ date }) {
       setCheck5(false);
       setCheck6(false);
     }
-  }, [date]);
+  }, [daysSinceEpoch]);
 
   return (
-    <div className="border">
+    <div className="border full-width">
       <h2>Quarterly</h2>
       <ul className="box-column">
         <li className="child">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ls from "local-storage";
 
-function Dailylist({ date }) {
+function Dailylist({ daysSinceEpoch }) {
   const [check1, setCheck1] = useState(ls.get("make-beds") ?? false);
   const [check2, setCheck2] = useState(ls.get("wash-dishes") ?? false);
   const [check3, setCheck3] = useState(ls.get("scrub-sink") ?? false);
@@ -24,7 +24,7 @@ function Dailylist({ date }) {
     setCheck4(false);
     setCheck5(false);
     setCheck6(false);
-  }, [date]);
+  }, [daysSinceEpoch]);
 
   return (
     <div className="border">

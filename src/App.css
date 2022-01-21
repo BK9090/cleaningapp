@@ -46,6 +46,10 @@ h2 {
   text-align: center;
 }
 
+.full-width {
+  width: 100%;
+}
+
 /* Implement space between on box-row
    Make sleek and modern
 */

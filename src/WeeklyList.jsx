@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import ls from "local-storage";
+import dayjs from "dayjs";
 
-function WeeklyList({ date }) {
+function WeeklyList({ daysSinceEpoch }) {
   const [check1, setCheck1] = useState(ls.get("wipe-out-fridge") ?? false);
   const [check2, setCheck2] = useState(ls.get("wipe-out-microwave") ?? false);
   const [check3, setCheck3] = useState(ls.get("tidy-pantry") ?? false);
@@ -22,7 +23,7 @@ function WeeklyList({ date }) {
     }
 
     // this executes every time date changes
-    if (date % 7 === 0) {
+    if (dayjs.unix(daysSinceEpoch * 86400).day() === 1) {
       setCheck1(false);
       setCheck2(false);
       setCheck3(false);
@@ -34,7 +35,7 @@ function WeeklyList({ date }) {
       setCheck9(false);
       setCheck10(false);
     }
-  }, [date]);
+  }, [daysSinceEpoch]);
 
   return (
     <div className="border">
